@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Body Mass Calculator</title>
+    <script>
+        function calculateMass() {
+            // Retrieve the input values
+            var height = document.getElementById("height").value;
+            var weight = document.getElementById("weight").value;
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            
+            // Perform the body mass calculation
+            var heightInMeters = height / 100;
+            var mass = weight / (heightInMeters * heightInMeters);
+            var roundedMass = mass.toFixed(2);
+
+            // Display the result
+            var resultElement = document.getElementById("result");
+
+            if (isNaN(mass)) {
+                // Display an error message if the input is not a number
+                resultElement.innerHTML = "Please enter valid numeric values for height and weight.";
+            } else if (height <= 0 || weight <= 0) {
+                // Display an error message if either height or weight is zero or negative
+                resultElement.innerHTML = "Please enter positive values for height and weight.";
+            } else {
+                // Display the calculated body mass
+                resultElement.innerHTML = "Your Body Mass Index (BMI) is: " + roundedMass;
+
+                // Provide interpretation based on the calculated body mass and gender
+                if (gender === "male") {
+                    if (mass < 18.5) {
+                        resultElement.innerHTML += "<br>You are underweight. Consider consulting a healthcare professional.";
+                    } else if (mass < 25) {
+                        resultElement.innerHTML += "<br>Your weight is within the normal range. Maintain a healthy lifestyle.";
+                    } else if (mass < 30) {
+                        resultElement.innerHTML += "<br>You are overweight. Consider adopting a balanced diet and exercising.";
+                    } else {
+                        resultElement.innerHTML += "<br>You are obese. It is recommended to seek medical advice for weight management.";
+                    }
+                } else if (gender === "female") {
+                    if (mass < 18.5) {
+                        resultElement.innerHTML += "<br>You are underweight. Consider consulting a healthcare professional.";
+                    } else if (mass < 24) {
+                        resultElement.innerHTML += "<br>Your weight is within the normal range. Maintain a healthy lifestyle.";
+                    } else if (mass < 30) {
+                        resultElement.innerHTML += "<br>You are overweight. Consider adopting a balanced diet and exercising.";
+                    } else {
+                        resultElement.innerHTML += "<br>You are obese. It is recommended to seek medical advice for weight management.";
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Body Mass Calculator</h1>
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height"><br>
+
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight"><br>
+    
+    <label for="gender">Gender:</label>
+    <input type="radio" name="gender" value="male" checked> Male
+    <input type="radio" name="gender" value="female"> Female
+    <br><br>
+
+    <button onclick="calculateMass()">Calculate</button>
+
+    <div id="result"></div>
+</body>
+</html>
